@@ -1,7 +1,13 @@
+import { Schema } from "@/types";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function Page({ params }: { params: { id: string } }) {
-  const isTrue = params.id === "true";
+export default function Page({ params: { id } }: { params: { id: string } }) {
+  const { success } = Schema.safeParse({ id });
+  if (!success) notFound();
+
+  const isTrue = id === "true";
+
   return (
     <main>
       <h1>{isTrue ? "Show" : "Hidden"}</h1>
